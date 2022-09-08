@@ -18,8 +18,8 @@ $yd_listele=$yazidetay->fetch(PDO::FETCH_ASSOC);
                             <div class="blog-title-area text-center">
                                 <ol class="breadcrumb hidden-xs-down">
                                     <li class="breadcrumb-item"><a href="<?php echo $ayar_cek["site_url"] ?>">Anasayfa</a></li>
-                                    <li class="breadcrumb-item"><a href="#">Blog</a></li>
-                                    <li class="breadcrumb-item active"><?php echo $yd_listele["yazi_title"]; ?></li>
+
+                                    <li class="breadcrumb-item active"><?php echo $yd_listele["yazi_title"] ?></li>
                                 </ol>
 
                                 <span class="color-orange"><a href="tech-category-01.php?kategori_id=<?php echo $yd_listele["kategori_id"]; ?>" title=""><?php echo $yd_listele["kategori_title"]; ?></a></span>
@@ -225,47 +225,38 @@ $yd_listele=$yazidetay->fetch(PDO::FETCH_ASSOC);
                             </div><!-- end custom-box -->
 
                             <hr class="invis1">
-
+                            <?php
+                            $yorumlar=$db->prepare("SELECT * FROM yorumlar WHERE yorum_yazi_id=? AND yorum_durum=? AND yorum_ust=?");
+                            $yorumlar->execute(array($yazi_id, 1, 0));
+                            $yorum_listele=$yorumlar->fetchALL(PDO::FETCH_ASSOC);
+                            $yorum_say=$yorumlar->rowCount();
+                            ?>
                             <div class="custombox clearfix">
-                                <h4 class="small-title">3 Yorum</h4>
+                                <h4 class="small-title"><?php echo $yorum_say; ?> Yorum</h4>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="comments-list">
-                                            <div class="media">
-                                                <a class="media-left" href="#">
-                                                    <img src="upload/author.jpg" alt="" class="rounded-circle">
-                                                </a>
-                                                <div class="media-body">
-                                                    <h4 class="media-heading user_name">Amanda Martines <small>5 days ago</small></h4>
-                                                    <p>Exercitation photo booth stumptown tote bag Banksy, elit small batch freegan sed. Craft beer elit seitan exercitation, photo booth et 8-bit kale chips proident chillwave deep v laborum. Aliquip veniam delectus, Marfa eiusmod Pinterest in do umami readymade swag. Selfies iPhone Kickstarter, drinking vinegar jean.</p>
-                                                    <a href="#" class="btn btn-primary btn-sm">Yanıtla</a>
-                                                </div>
-                                            </div>
-                                            <div class="media">
-                                                <a class="media-left" href="#">
-                                                    <img src="upload/author_01.jpg" alt="" class="rounded-circle">
-                                                </a>
-                                                <div class="media-body">
+                                          <?php
+                                          if ($yorum_say) {
+                                            foreach ($yorum_listele as $row) { ?>
+                                              <div class="media">
+                                                  <a class="media-left" href="#">
+                                                      <img src="images/user.png" alt="" class="rounded-circle">
+                                                  </a>
+                                                  <div class="media-body">
+                                                      <h4 class="media-heading user_name"><?php echo $row["yorum_ekleyen"]; ?> <small><?php echo date('d.m.Y H:i:s',strtotime($row["yorum_tarih"])); ?></small></h4>
+                                                      <p><?php echo $row["yorum_icerik"]; ?></p>
+                                                      <a href="#" class="btn btn-primary btn-sm">Yanıtla</a>
+                                                  </div>
+                                              </div>
+                                          <?php } }
+                                          else {
+                                            echo "Bu yazıya hiç yorum yapılmamış.. Hadi ilk yorumu sen yap...";
+                                          }
+                                           ?>
 
-                                                    <h4 class="media-heading user_name">Baltej Singh <small>5 days ago</small></h4>
 
-                                                    <p>Drinking vinegar stumptown yr pop-up artisan sunt. Deep v cliche lomo biodiesel Neutra selfies. Shorts fixie consequat flexitarian four loko tempor duis single-origin coffee. Banksy, elit small.</p>
 
-                                                    <a href="#" class="btn btn-primary btn-sm">Yanıtla</a>
-                                                </div>
-                                            </div>
-                                            <div class="media last-child">
-                                                <a class="media-left" href="#">
-                                                    <img src="upload/author_02.jpg" alt="" class="rounded-circle">
-                                                </a>
-                                                <div class="media-body">
-
-                                                    <h4 class="media-heading user_name">Marie Johnson <small>5 days ago</small></h4>
-                                                    <p>Kickstarter seitan retro. Drinking vinegar stumptown yr pop-up artisan sunt. Deep v cliche lomo biodiesel Neutra selfies. Shorts fixie consequat flexitarian four loko tempor duis single-origin coffee. Banksy, elit small.</p>
-
-                                                    <a href="#" class="btn btn-primary btn-sm">Yanıtla</a>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div><!-- end col -->
                                 </div><!-- end row -->
@@ -277,13 +268,48 @@ $yd_listele=$yazidetay->fetch(PDO::FETCH_ASSOC);
                                 <h4 class="small-title">Yorum Yazın</h4>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <form class="form-wrapper">
-                                            <input type="text" class="form-control" placeholder="Adınız">
-                                            <input type="text" class="form-control" placeholder="Email adresiniz">
-                                            <textarea class="form-control" placeholder="Yorum"></textarea>
-                                            <button type="submit" class="btn btn-primary">Yorumu Gönder</button>
+                                        <form class="form-wrapper" method="POST" id="yorumForm" onsubmit="return false;">
+                                            <input name="yorum_yazi_id" type="hidden"  value="<?php echo $yd_listele["yazi_id"]; ?>">
+                                            <input name="yorum_ekleyen" type="text" class="form-control" placeholder="Adınız">
+                                            <input name="yorum_eposta" type="email" class="form-control" placeholder="Email adresiniz">
+                                            <textarea name="yorum_icerik" class="form-control" placeholder="Yorum"></textarea>
+                                            <button type="submit" onclick="yorumGonder();" class="btn btn-primary" role="button">Yorumu Gönder</button>
                                         </form>
                                     </div>
+                                    <!-- AJAX İLE YORUM YAPTIRMA -->
+                                    <script>
+                                      function yorumGonder(){
+                                        var degerler = $("#yorumForm").serialize();//yorum formdaki namelerin hepsini al
+
+                                        $.ajax({
+                                          type : "POST",
+                                          url : "yorum-yap.php",
+                                          data : degerler,
+
+                                          success: function(sonuc){
+                                            if (sonuc == "bos") {
+                                              swal("Dikkat!", "Lütfen boş alan bırakmayınız!","warning");
+                                            }else if (sonuc == "no") {
+                                              swal("Hata!", "Yorum yapılırken bir hata oluştu!","error");
+                                            }else if (sonuc == "yes") {
+                                              swal({
+                                                title : "Tebrikler !",
+                                                text : "Yorumunuz başarıyla gönderildi...",
+                                                type : "success",
+                                                html : true,
+                                                timer : 2000},
+                                                function (){
+                                                  location.reload();
+                                                }
+                                              );
+                                            }
+                                          }
+                                        });
+                                      }
+                                    </script>
+                                    <!-- AJAX İLE YORUM YAPTIRMA SON -->
+
+
                                 </div>
                             </div>
                         </div><!-- end page-wrapper -->

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1:3306
--- Üretim Zamanı: 06 Eyl 2022, 13:51:48
+-- Üretim Zamanı: 08 Eyl 2022, 17:13:43
 -- Sunucu sürümü: 5.7.36
 -- PHP Sürümü: 7.4.26
 
@@ -162,6 +162,38 @@ INSERT INTO `yazilar` (`yazi_id`, `yazi_foto`, `yazi_title`, `yazi_icerik`, `yaz
 (8, 'haber1.jpeg', 'Top 10 phone applications and 2017 mobile design awards', 'Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.', '2022-09-01 17:08:03', 4, 42, 'top-10-phone-applications-and-2017-mobile-design-awards', 2),
 (9, 'haber2.png', 'Top 10 phone applications and 2017 mobile design awards', 'Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.', '2022-09-01 17:08:03', 2, 43, 'top-10-phone-applications-and-2017-mobile-design-awards', 2),
 (10, 'haber1.jpeg', 'Top 10 phone applications and 2017 mobile design awards', 'Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.', '2022-09-01 17:08:03', 2, 44, 'top-10-phone-applications-and-2017-mobile-design-awards', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `yorumlar`
+--
+
+DROP TABLE IF EXISTS `yorumlar`;
+CREATE TABLE IF NOT EXISTS `yorumlar` (
+  `yorum_id` int(11) NOT NULL AUTO_INCREMENT,
+  `yorum_ekleyen` varchar(500) NOT NULL,
+  `yorum_eposta` varchar(500) NOT NULL,
+  `yorum_icerik` text NOT NULL,
+  `yorum_tarih` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `yorum_yazi_id` int(11) NOT NULL,
+  `yorum_durum` int(11) NOT NULL DEFAULT '0',
+  `yorum_ust` int(11) NOT NULL,
+  `yorum_cevap` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`yorum_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+--
+-- Tablo döküm verisi `yorumlar`
+--
+
+INSERT INTO `yorumlar` (`yorum_id`, `yorum_ekleyen`, `yorum_eposta`, `yorum_icerik`, `yorum_tarih`, `yorum_yazi_id`, `yorum_durum`, `yorum_ust`, `yorum_cevap`) VALUES
+(1, 'Fatih Alparslan', 'alparslan.190357@gmail.com', 'haberleriniz çok güzel', '2022-09-09 11:22:14', 1, 1, 0, 1),
+(2, 'Berkay', 'yaylaci@gmail.com', 'ses kes', '2022-09-08 13:04:36', 10, 1, 0, 0),
+(3, 'Kadir Yaylacı', 'yaylaci@gmail.com', 'kankaaaa bunee', '2022-09-08 13:12:22', 10, 1, 0, 0),
+(4, 'Erdem', 'yaylaci@gmail.comsdad', 'tabiii', '2022-09-08 13:54:45', 10, 1, 0, 0),
+(5, 'Erkin Koray', 'yaylaci@gmail.com', 'Nasılsınnn ', '2022-09-08 14:20:32', 1, 1, 0, 0),
+(6, 'Erkin Koray', 'yaylaci@gmail.com', 'Böyle gelmiş böyle gidecek', '2022-09-08 17:06:23', 9, 1, 0, 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

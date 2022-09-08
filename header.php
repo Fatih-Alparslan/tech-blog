@@ -1,10 +1,9 @@
 <?php include "sistem/baglan.php";
 
+
 $ayarlar=$db->prepare("SELECT * FROM ayarlar");
 $ayarlar->execute();
 $ayar_cek=$ayarlar->fetch(PDO::FETCH_ASSOC);
-
-
 
 
 ?>
@@ -49,6 +48,12 @@ $ayar_cek=$ayarlar->fetch(PDO::FETCH_ASSOC);
 
     <!-- Version Tech CSS for this template -->
     <link href="css/version/tech.css" rel="stylesheet">
+
+    <!-- SWEET ALERT SWAL.CSS -->
+    <link rel="stylesheet" href="css/swal.css">
+
+    <!-- SWEET ALERT SWAL.MİN.JS -->
+    <script type="text/javascript" src="js/swal.min.js"></script>
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
