@@ -9,10 +9,10 @@ $ayar_cek=$ayarlar->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 
     <!-- Basic -->
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Mobile Metas -->
@@ -54,6 +54,8 @@ $ayar_cek=$ayarlar->fetch(PDO::FETCH_ASSOC);
 
     <!-- SWEET ALERT SWAL.MİN.JS -->
     <script type="text/javascript" src="js/swal.min.js"></script>
+    <script type="text/javascript" src="js/function.js"></script>
+
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>

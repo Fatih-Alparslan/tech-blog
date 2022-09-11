@@ -5,7 +5,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <form class="form-wrapper" action="ara.php" method="GET">
-                                            <input name="ara" type="text" class="form-control" placeholder="Ara">
+                                            <input name="ara" type="text" class="form-control" placeholder="Ara...">
                                         </form>
                                     </div>
                                 </div>

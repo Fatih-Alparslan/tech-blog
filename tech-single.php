@@ -240,9 +240,7 @@ $yd_listele=$yazidetay->fetch(PDO::FETCH_ASSOC);
                                           if ($yorum_say) {
                                             foreach ($yorum_listele as $row) { ?>
                                               <div class="media">
-                                                  <a class="media-left" href="#">
                                                       <img src="images/user.png" alt="" class="rounded-circle">
-                                                  </a>
                                                   <div class="media-body">
                                                       <h4 class="media-heading user_name"><?php echo $row["yorum_ekleyen"]; ?> <small><?php echo date('d.m.Y H:i:s',strtotime($row["yorum_tarih"])); ?></small></h4>
                                                       <p><?php echo $row["yorum_icerik"]; ?></p>
@@ -276,40 +274,6 @@ $yd_listele=$yazidetay->fetch(PDO::FETCH_ASSOC);
                                             <button type="submit" onclick="yorumGonder();" class="btn btn-primary" role="button">Yorumu Gönder</button>
                                         </form>
                                     </div>
-                                    <!-- AJAX İLE YORUM YAPTIRMA -->
-                                    <script>
-                                      function yorumGonder(){
-                                        var degerler = $("#yorumForm").serialize();//yorum formdaki namelerin hepsini al
-
-                                        $.ajax({
-                                          type : "POST",
-                                          url : "yorum-yap.php",
-                                          data : degerler,
-
-                                          success: function(sonuc){
-                                            if (sonuc == "bos") {
-                                              swal("Dikkat!", "Lütfen boş alan bırakmayınız!","warning");
-                                            }else if (sonuc == "no") {
-                                              swal("Hata!", "Yorum yapılırken bir hata oluştu!","error");
-                                            }else if (sonuc == "yes") {
-                                              swal({
-                                                title : "Tebrikler !",
-                                                text : "Yorumunuz başarıyla gönderildi...",
-                                                type : "success",
-                                                html : true,
-                                                timer : 2000},
-                                                function (){
-                                                  location.reload();
-                                                }
-                                              );
-                                            }
-                                          }
-                                        });
-                                      }
-                                    </script>
-                                    <!-- AJAX İLE YORUM YAPTIRMA SON -->
-
-
                                 </div>
                             </div>
                         </div><!-- end page-wrapper -->

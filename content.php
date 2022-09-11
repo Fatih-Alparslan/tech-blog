@@ -8,8 +8,19 @@
                             </div><!-- end blog-top -->
 
                             <?php
+                            error_reporting(0);
+                            $sayfa = intval($_GET["sayfa"]);if(!$sayfa || $sayfa < 1){$sayfa=1;}
+                            $yazi_say=$db->query("SELECT * FROM yazilar");
+                            $Toplamyazi=$yazi_say->rowCount();
+                            $limit=8;
+                            $sayfasayisi= ceil($Toplamyazi/$limit);// bölünen sayfayı tam sayıya yuvarlar
+                            if($sayfa>$sayfasayisi){$sayfa=$sayfasayisi;}
+                            $goster=$sayfa*$limit-$limit;//1 * 2 - 2 = 0 ->0-2
+                            $gorunensayfa=3;
+
+
                             $yazilar= $db->prepare("SELECT * FROM yazilar INNER JOIN kategoriler INNER JOIN yazar
-                            where kategoriler.kategori_id=yazilar.yazi_kategori_id AND yazar.yazar_id=yazilar.yazi_yazar_id ORDER BY yazi_id DESC LIMIT 8");
+                            where kategoriler.kategori_id=yazilar.yazi_kategori_id AND yazar.yazar_id=yazilar.yazi_yazar_id ORDER BY yazi_id DESC LIMIT $goster,$limit");
                             $yazilar->execute();
                             $yazi_listele=$yazilar->fetchALL(PDO::FETCH_ASSOC);
 
@@ -51,14 +62,31 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <nav aria-label="Page navigation">
+
+
                                     <ul class="pagination justify-content-start">
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">Sonraki Sayfa</a>
-                                        </li>
+                                      <?php if($sayfa>1){ ?>
+                                        <li class="page-item"><a class="page-link" href="tech-index.php?sayfa=1">İlk Sayfa</a></li>
+                                        <li class="page-item"><a class="page-link" href="tech-index.php?sayfa=<?php echo $sayfa-1; ?>">Önceki Sayfa</a></li>
+                                      <?php } ?>
+
+                                      <?php for ($i=$sayfa-$gorunensayfa; $i <$sayfa+$gorunensayfa+1 ; $i++) {
+                                        if ($i>0 AND $i<=$sayfasayisi) {
+                                          if ($i==$sayfa) {
+                                            echo '<li class="page-item disabled"><a class="page-link" style="background-color:#9acfed !important;">'.$i.'</a></li>';
+                                          }
+                                          else {
+                                            echo '<li class="page-item"><a class="page-link" href="tech-index.php?sayfa='.$i.'">'.$i.'</a></li>';
+                                          }
+                                        }
+                                      } ?>
+
+                                      <?php if($sayfa!=$sayfasayisi){ ?>
+                                        <li class="page-item"><a class="page-link" href="tech-index.php?sayfa=<?php echo $sayfa+1; ?>">Sonraki Sayfa</a></li>
+                                        <li class="page-item"><a class="page-link" href="tech-index.php?sayfa=<?php echo $sayfasayisi; ?>">Son Sayfa</a></li>
+                                      <?php } ?>
                                     </ul>
+
                                 </nav>
                             </div><!-- end col -->
                         </div><!-- end  row -->

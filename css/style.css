@@ -779,8 +779,10 @@ div.tab button:hover {
     text-transform: capitalize;
 }
 
+
+
 .page-link:hover,
-.page-link:focus {
+.page-link:focus, {
     color: #111 !important;
 }
 

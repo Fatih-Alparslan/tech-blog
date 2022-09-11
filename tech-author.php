@@ -57,9 +57,20 @@ $yazar_goster=$yazarlar->fetch(PDO::FETCH_ASSOC);
                       <hr class="invis1">
 
 <?php
+error_reporting(0);
 $yazar_id=$_GET["yazarid"];
+$sayfa = intval($_GET["sayfa"]);if(!$sayfa || $sayfa < 1){$sayfa=1;}
+$yazi_say=$db->query("SELECT * FROM yazilar WHERE yazi_yazar_id=".$yazar_id);
+$Toplamyazi=$yazi_say->rowCount();
+$limit=2;
+$sayfasayisi= ceil($Toplamyazi/$limit);// bölünen sayfayı tam sayıya yuvarlar
+if($sayfa>$sayfasayisi){$sayfa=$sayfasayisi;}
+$goster=$sayfa*$limit-$limit;//1 * 2 - 2 = 0 ->0-2
+$gorunensayfa=3;
+
+
 $yazilar= $db->prepare("SELECT * FROM yazilar INNER JOIN kategoriler INNER JOIN yazar
-where yazar_id=? AND kategoriler.kategori_id=yazilar.yazi_kategori_id AND yazar.yazar_id=yazilar.yazi_yazar_id ORDER BY yazi_id DESC");
+where yazar_id=? AND kategoriler.kategori_id=yazilar.yazi_kategori_id AND yazar.yazar_id=yazilar.yazi_yazar_id ORDER BY yazi_id DESC LIMIT $goster,$limit");
 $yazilar->execute(array($yazar_id));
 $yazi_goster=$yazilar->fetchALL(PDO::FETCH_ASSOC);
 
@@ -93,20 +104,36 @@ foreach ($yazi_goster as $row) {?>
 
 </div><!-- end page-wrapper -->
                   <hr class="invis">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-start">
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">Sonraki Sayfa</a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div><!-- end col -->
-                        </div><!-- end row -->
+                  <div class="row">
+                      <div class="col-md-12">
+                          <nav aria-label="Page navigation">
+
+                              <ul class="pagination justify-content-start">
+                                <?php if($sayfa>1){ ?>
+                                  <li class="page-item"><a class="page-link" href="tech-author.php?yazarid=<?php echo $yazar_id; ?>&sayfa=1">İlk Sayfa</a></li>
+                                  <li class="page-item"><a class="page-link" href="tech-author.php?yazarid=<?php echo $yazar_id; ?>&sayfa=<?php echo $sayfa-1; ?>">Önceki Sayfa</a></li>
+                                <?php } ?>
+
+                                <?php for ($i=$sayfa-$gorunensayfa; $i <$sayfa+$gorunensayfa+1 ; $i++) {
+                                  if ($i>0 AND $i<=$sayfasayisi) {
+                                    if ($i==$sayfa) {
+                                      echo '<li class="page-item disabled"><a class="page-link" style="background-color:#9acfed !important;">'.$i.'</a></li>';
+                                    }
+                                    else {
+                                      echo '<li class="page-item"><a class="page-link" href="tech-author.php?yazarid='.$yazar_id.'&sayfa='.$i.'">'.$i.'</a></li>';
+                                    }
+                                  }
+                                } ?>
+
+                                <?php if($sayfa!=$sayfasayisi){ ?>
+                                  <li class="page-item"><a class="page-link" href="tech-author.php?yazarid=<?php echo $yazar_id; ?>&sayfa=<?php echo $sayfa+1; ?>">Sonraki Sayfa</a></li>
+                                  <li class="page-item"><a class="page-link" href="tech-author.php?yazarid=<?php echo $yazar_id; ?>&sayfa=<?php echo $sayfasayisi; ?>">Son Sayfa</a></li>
+                                <?php } ?>
+                              </ul>
+
+                          </nav>
+                      </div><!-- end col -->
+                  </div><!-- end  row -->
                     </div><!-- end col -->
 
                     <?php include 'page-nav.php'; ?>
