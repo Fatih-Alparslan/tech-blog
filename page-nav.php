@@ -30,8 +30,8 @@
                                     </div>
 
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                                        <a href="<?php echo $ayar_cek["site_google"] ?>" target="_blank" class="social-button google-button">
-                                            <i class="fa fa-google-plus"></i>
+                                        <a href="<?php echo $ayar_cek["site_github"] ?>" target="_blank" class="social-button google-button">
+                                            <i class="fa fa-github"></i>
                                             <p>17k</p>
                                         </a>
                                     </div>

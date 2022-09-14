@@ -7,10 +7,10 @@
                                 <a href="<?php echo $ayar_cek["site_url"] ?>"><img src="images/version/tech-logo.png" alt="" class="img-fluid"></a>
                                 <p><?php echo $ayar_cek["site_desc"] ?></p>
                                 <div class="social">
-                                    <a href="<?php echo $ayar_cek["site_facebook"] ?>" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook"></i></a>
-                                    <a href="<?php echo $ayar_cek["site_twitter"] ?>" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i class="fa fa-twitter"></i></a>
-                                    <a href="<?php echo $ayar_cek["site_instagram"] ?>" data-toggle="tooltip" data-placement="bottom" title="Instagram"><i class="fa fa-instagram"></i></a>
-                                    <a href="<?php echo $ayar_cek["site_google"] ?>" data-toggle="tooltip" data-placement="bottom" title="Google Plus"><i class="fa fa-google-plus"></i></a>
+                                    <a href="<?php echo $ayar_cek["site_facebook"] ?>" data-toggle="tooltip" data-placement="bottom" title="Facebook" target="_blank"><i class="fa fa-facebook"></i></a>
+                                    <a href="<?php echo $ayar_cek["site_twitter"] ?>" data-toggle="tooltip" data-placement="bottom" title="Twitter" target="_blank"><i class="fa fa-twitter"></i></a>
+                                    <a href="<?php echo $ayar_cek["site_instagram"] ?>" data-toggle="tooltip" data-placement="bottom" title="Instagram" target="_blank"><i class="fa fa-instagram"></i></a>
+                                    <a href="<?php echo $ayar_cek["site_github"] ?>" data-toggle="tooltip" data-placement="bottom" title="GitHub" target="_blank"><i class="fa fa-github"></i></a>
                                 </div>
 
                                 <hr class="invis">

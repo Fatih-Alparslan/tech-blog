@@ -25,15 +25,23 @@
                     <div class="col-lg-12">
                         <div class="page-wrapper">
                             <div class="row">
+                              <?php
+                               $hakkimizda=$db->prepare("SELECT * FROM hakkimizda");
+                               $hakkimizda->execute();
+                               $hakkimizda_cek=$hakkimizda->fetch(PDO::FETCH_ASSOC);
+                               ?>
                                 <div class="col-lg-5">
-                                    <h4>Biz Kimiz</h4>
-                                    <p>Tech Blog is a personal blog for handcrafted, cameramade photography content, fashion styles from independent creatives around the world.</p>
+                                    <h4><?php echo $hakkimizda_cek["hakkimizda_baslik"]; ?></h4>
+                                    <p><?php echo $hakkimizda_cek["hakkimizda_icerik"]; ?></p>
+                                    <h4>KONUM VE TELEFON BİLGİLERİ</h4>
 
-                                    <h4>Vizyonumuz</h4>
-                                    <p>Etiam vulputate urna id libero auctor maximus. Nulla dignissim ligula diam, in sollicitudin ligula congue quis turpis dui urna nibhs. </p>
+                                    <p><?php echo $hakkimizda_cek["hakkimizda_adres"]; ?></p>
 
-                                    <h4>Misyonumuz</h4>
-                                    <p>Fusce dapibus nunc quis quam tempor vestibulum sit amet consequat enim. Pellentesque blandit hendrerit placerat. Integertis non.</p>
+                                  <p><i class="fa fa-phone" aria-hidden="true"></i>
+                                    <a href="tel:<?php echo $hakkimizda_cek["hakkimizda_telefon"]; ?>">
+                                    İletişim : <?php echo $hakkimizda_cek["hakkimizda_telefon"]; ?></a></p>
+
+
                                 </div>
                                 <div class="col-lg-7">
                                     <form action="yorum-yap.php" class="form-wrapper" id="iletisimForm" method="POST" onsubmit="return false;" >
@@ -44,6 +52,46 @@
                                         <button type="submit" onclick="iletisimGonder();" class="btn btn-primary" role="button">Gönder <i class="fa fa-envelope-open-o"></i></button>
                                     </form>
                                 </div>
+
+                            </div>
+
+                            <hr class="invis1">
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="page-wrapper">
+                                        <div class="custombox authorbox clearfix">
+                                            <h4 class="small-title">Yazarlar</h4>
+                                            <?php
+                                            $yazarlar=$db->prepare("SELECT * FROM yazar");
+                                            $yazarlar->execute();
+                                            $yazar_goster=$yazarlar->fetchALL(PDO::FETCH_ASSOC);
+
+                                            foreach ($yazar_goster as $row) { ?>
+                                              <div class="row">
+                                                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                      <img src="images/yazarfoto/<?php echo $row["yazar_foto"]; ?>" alt="" class="img-fluid rounded-circle">
+                                                  </div><!-- end col -->
+
+                                                  <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                                      <h4><?php echo $row["yazar_adi"]; ?></h4>
+                                                      <p><?php echo $row["yazar_aciklama"]; ?></p>
+                                                      <div class="topsocial">
+                                                          <a href="<?php echo $row["yazar_facebook"]; ?>" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook"></i></a>
+                                                          <a href="<?php echo $row["yazar_youtube"]; ?>" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Youtube"><i class="fa fa-youtube"></i></a>
+                                                          <a href="<?php echo $row["yazar_pinterest"]; ?>" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Pinterest"><i class="fa fa-pinterest"></i></a>
+                                                          <a href="<?php echo $row["yazar_twitter"]; ?>" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i class="fa fa-twitter"></i></a>
+                                                          <a href="<?php echo $row["yazar_instagram"]; ?>" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Instagram"><i class="fa fa-instagram"></i></a>
+                                                          <a href="<?php echo $row["yazar_website"]; ?>" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Website"><i class="fa fa-link"></i></a>
+                                                      </div><!-- end social -->
+
+                                                  </div><!-- end col -->
+                                              </div><!-- end row -->
+                                              <hr class="invis1">
+                                          <?php   }  ?>
+                                        </div><!-- end author-box -->
+                                      </div>
+                                  </div>
                             </div>
                         </div><!-- end page-wrapper -->
                     </div><!-- end col -->
