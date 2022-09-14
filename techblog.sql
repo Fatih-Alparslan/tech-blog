@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1:3306
--- Üretim Zamanı: 08 Eyl 2022, 17:13:43
+-- Üretim Zamanı: 14 Eyl 2022, 21:21:03
 -- Sunucu sürümü: 5.7.36
 -- PHP Sürümü: 7.4.26
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `ayarlar` (
   `site_logo` varchar(500) NOT NULL,
   `site_favicon` varchar(500) NOT NULL,
   `site_facebook` varchar(500) NOT NULL,
-  `site_google` varchar(500) NOT NULL,
+  `site_github` varchar(500) NOT NULL,
   `site_instagram` varchar(500) NOT NULL,
   `site_twitter` varchar(500) NOT NULL,
   PRIMARY KEY (`site_id`)
@@ -47,8 +47,60 @@ CREATE TABLE IF NOT EXISTS `ayarlar` (
 -- Tablo döküm verisi `ayarlar`
 --
 
-INSERT INTO `ayarlar` (`site_id`, `site_url`, `site_title`, `site_desc`, `site_keyw`, `site_logo`, `site_favicon`, `site_facebook`, `site_google`, `site_instagram`, `site_twitter`) VALUES
-(1, 'http://localhost/tech-blog/tech-index.php', 'Kafayaal - Kişisel Web Blogu', 'Tech Blog, teknoloji hakkında ve gündemdeki haberler hakkında makalelerin bulunduğu bir blogdur.', 'Fatih, Alparslan, Blog, Yazılım, Bilişim, Haberler', 'tech-logo.png', 'favicon.ico', 'https://www.facebook.com/', 'https://google.com/', 'https://www.instagram.com/fatihalparslan0/', 'https://twitter.com/fatihalparslan0');
+INSERT INTO `ayarlar` (`site_id`, `site_url`, `site_title`, `site_desc`, `site_keyw`, `site_logo`, `site_favicon`, `site_facebook`, `site_github`, `site_instagram`, `site_twitter`) VALUES
+(1, 'http://localhost/tech-blog/tech-index.php', 'Kafayaal - Kişisel Web Blogu', 'Tech Blog, teknoloji hakkında ve gündemdeki haberler hakkında makalelerin bulunduğu bir blogdur.', 'Fatih, Alparslan, Blog, Yazılım, Bilişim, Haberler', 'tech-logo.png', 'favicon.ico', 'https://www.facebook.com/fatihalparslan', 'https://github.com/Fatih-Alparslan', 'https://www.instagram.com/fatihalparslan0/', 'https://twitter.com/fatihalparslan0');
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `hakkimizda`
+--
+
+DROP TABLE IF EXISTS `hakkimizda`;
+CREATE TABLE IF NOT EXISTS `hakkimizda` (
+  `hakkimizda_id` int(11) NOT NULL AUTO_INCREMENT,
+  `hakkimizda_baslik` varchar(500) NOT NULL,
+  `hakkimizda_icerik` text NOT NULL,
+  `hakkimizda_adres` varchar(1000) NOT NULL,
+  `hakkimizda_telefon` varchar(500) NOT NULL,
+  PRIMARY KEY (`hakkimizda_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Tablo döküm verisi `hakkimizda`
+--
+
+INSERT INTO `hakkimizda` (`hakkimizda_id`, `hakkimizda_baslik`, `hakkimizda_icerik`, `hakkimizda_adres`, `hakkimizda_telefon`) VALUES
+(1, 'HAKKIMIZDA', 'Tech Blog is a personal blog for handcrafted, cameramade photography content, fashion styles from independent creatives around the world.\n\nEtiam vulputate urna id libero auctor maximus. Nulla dignissim ligula diam, in sollicitudin ligula congue quis turpis dui urna nibhs.', '                                    <iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3007.6714640061664!2d28.991601250268104!3d41.07617352309252!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab6f12499c9ad%3A0x89e628daa7884874!2zS3VtcnUgU2suLCDFnmnFn2xpL8Swc3RhbmJ1bA!5e0!3m2!1str!2str!4v1662902591068!5m2!1str!2str\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>', '0850 67 89');
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `iletisim`
+--
+
+DROP TABLE IF EXISTS `iletisim`;
+CREATE TABLE IF NOT EXISTS `iletisim` (
+  `iletisim_id` int(11) NOT NULL AUTO_INCREMENT,
+  `iletisim_ad` varchar(500) NOT NULL,
+  `iletisim_eposta` varchar(500) NOT NULL,
+  `iletisim_konu` varchar(500) NOT NULL,
+  `iletisim_mesaj` text NOT NULL,
+  `iletisim_tarih` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `iletisim_okunma` varchar(500) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`iletisim_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+--
+-- Tablo döküm verisi `iletisim`
+--
+
+INSERT INTO `iletisim` (`iletisim_id`, `iletisim_ad`, `iletisim_eposta`, `iletisim_konu`, `iletisim_mesaj`, `iletisim_tarih`, `iletisim_okunma`) VALUES
+(1, 'fatih', 'alparslan@gmail.com', 'ben kim miyim', 'sen kimsin', '2022-09-09 09:59:01', '0'),
+(2, 'fatih', 'sdada@gmail.com', 'böyle devamm', 'haber', '2022-09-09 09:59:01', '0'),
+(3, 'dsad', 'sdada@gmail.com', 'konu', 'mesaj', '2022-09-09 09:59:01', '0'),
+(4, 'neva', 'neva@gmail.com', 'siten hakkında', 'siten çok güzel olmuş abi', '2022-09-09 09:59:01', '0'),
+(5, 'hayat', 'hayat@gmail.com', 'Reklam', 'Sitenizde ürünlerim hakkında reklam vermek istiyorum.', '2022-09-09 10:00:03', '0');
 
 -- --------------------------------------------------------
 
@@ -145,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `yazilar` (
   `yazi_seolink` varchar(500) NOT NULL,
   `yazi_yazar_id` int(11) NOT NULL,
   PRIMARY KEY (`yazi_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 --
 -- Tablo döküm verisi `yazilar`
@@ -161,7 +213,17 @@ INSERT INTO `yazilar` (`yazi_id`, `yazi_foto`, `yazi_title`, `yazi_icerik`, `yaz
 (7, 'haber2.png', 'Top 10 phone applications and 2017 mobile design awards', 'Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.', '2022-09-01 17:08:03', 1, 41, 'top-10-phone-applications-and-2017-mobile-design-awards', 2),
 (8, 'haber1.jpeg', 'Top 10 phone applications and 2017 mobile design awards', 'Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.', '2022-09-01 17:08:03', 4, 42, 'top-10-phone-applications-and-2017-mobile-design-awards', 2),
 (9, 'haber2.png', 'Top 10 phone applications and 2017 mobile design awards', 'Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.', '2022-09-01 17:08:03', 2, 43, 'top-10-phone-applications-and-2017-mobile-design-awards', 2),
-(10, 'haber1.jpeg', 'Top 10 phone applications and 2017 mobile design awards', 'Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.', '2022-09-01 17:08:03', 2, 44, 'top-10-phone-applications-and-2017-mobile-design-awards', 2);
+(10, 'haber1.jpeg', 'Top 10 phone applications and 2017 mobile design awards', 'Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.', '2022-09-01 17:08:03', 2, 44, 'top-10-phone-applications-and-2017-mobile-design-awards', 2),
+(11, 'haber1.jpeg', 'En iyi 10 telefon uygulaması', 'Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.', '2022-09-01 17:08:03', 1, 123, 'top-10-phone-applications-and-2017-mobile-design-awards', 1),
+(12, 'haber2.png', 'A device you can use both headphones and usb', 'Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.', '2022-09-01 17:08:03', 2, 12, 'a-device-you-can-use-both-headphones-and-usb', 2),
+(13, 'haber3.jpeg', 'iPhone 14 Renk Seçenekleri Sızdırıldı!', 'Yakın zamanda tanıtılması beklenen iPhone 14 için sızıntılar yayınlanmaya devam ediyor. Apple’a ait sızıntıları ile bilinen Twitter hesabı Jioriku iPhone 14’ün hangi renk opsiyonlarına sahip olacağını paylaştı.', '2022-09-01 17:08:03', 3, 45, 'iphone-14-renk-secenekleri-sizdirildi', 1),
+(14, 'haber4.jpg', 'Adobe Photoshop’ı İnternet Üzerinde Bedava Yapmayı Planlıyor', 'Adobe Photoshop’ın ilk tarayıcı versiyonunu ekim ayında yayınladı. Bu bedava versiyonu şu an Kanada’da test edilmekte. Uygulamanın internet üzerindeki bu sürümü başlangıçta basit düzenleme işlemlerini gerçekleştirebiliyordu. Tabakalar ve çekirdek düzenleme araçları da daha sonra bu versiyondaki yerini aldı. ', '2022-09-01 17:08:03', 4, 65, 'adobe-photoshopu-internet-uzerinde-bedava-yapmayı-planliyor', 2),
+(15, 'haber2.png', 'A device you can use both headphones and usb', 'Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.', '2022-09-01 17:08:03', 2, 31, 'a-device-you-can-use-both-headphones-and-usb', 2),
+(16, 'haber1.jpeg', 'Top 10 phone applications and 2017 mobile design awards', 'Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.', '2022-09-01 17:08:03', 2, 32, 'top-10-phone-applications-and-2017-mobile-design-awards', 1),
+(17, 'haber2.png', 'Top 10 phone applications and 2017 mobile design awards', 'Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.', '2022-09-01 17:08:03', 1, 41, 'top-10-phone-applications-and-2017-mobile-design-awards', 2),
+(18, 'haber1.jpeg', 'Top 10 phone applications and 2017 mobile design awards', 'Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.', '2022-09-01 17:08:03', 4, 42, 'top-10-phone-applications-and-2017-mobile-design-awards', 2),
+(19, 'haber2.png', 'Top 10 phone applications and 2017 mobile design awards', 'Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.', '2022-09-01 17:08:03', 2, 43, 'top-10-phone-applications-and-2017-mobile-design-awards', 2),
+(20, 'haber1.jpeg', 'Top 10 phone applications and 2017 mobile design awards', 'Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.', '2022-09-01 17:08:03', 2, 44, 'top-10-phone-applications-and-2017-mobile-design-awards', 2);
 
 -- --------------------------------------------------------
 
@@ -181,7 +243,7 @@ CREATE TABLE IF NOT EXISTS `yorumlar` (
   `yorum_ust` int(11) NOT NULL,
   `yorum_cevap` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`yorum_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Tablo döküm verisi `yorumlar`
@@ -193,7 +255,9 @@ INSERT INTO `yorumlar` (`yorum_id`, `yorum_ekleyen`, `yorum_eposta`, `yorum_icer
 (3, 'Kadir Yaylacı', 'yaylaci@gmail.com', 'kankaaaa bunee', '2022-09-08 13:12:22', 10, 1, 0, 0),
 (4, 'Erdem', 'yaylaci@gmail.comsdad', 'tabiii', '2022-09-08 13:54:45', 10, 1, 0, 0),
 (5, 'Erkin Koray', 'yaylaci@gmail.com', 'Nasılsınnn ', '2022-09-08 14:20:32', 1, 1, 0, 0),
-(6, 'Erkin Koray', 'yaylaci@gmail.com', 'Böyle gelmiş böyle gidecek', '2022-09-08 17:06:23', 9, 1, 0, 0);
+(6, 'Erkin Koray', 'yaylaci@gmail.com', 'Böyle gelmiş böyle gidecek', '2022-09-08 17:06:23', 9, 1, 0, 0),
+(7, 'Şebnem', 'sebo@gmail.com', 'iyi günler', '2022-09-08 21:29:43', 10, 1, 0, 0),
+(8, 'Ceren', 'ceren@gmail.com', 'bu haberi gördüğüme sevindim', '2022-09-08 22:15:48', 9, 1, 0, 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
