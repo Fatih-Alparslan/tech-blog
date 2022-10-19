@@ -1,11 +1,7 @@
 <?php include "sistem/baglan.php";
-
-
 $ayarlar=$db->prepare("SELECT * FROM ayarlar");
 $ayarlar->execute();
 $ayar_cek=$ayarlar->fetch(PDO::FETCH_ASSOC);
-
-
 ?>
 
 <!DOCTYPE html>

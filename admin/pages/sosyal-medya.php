@@ -15,7 +15,7 @@ $ayar_cek=$ayarlar->fetch(PDO::FETCH_ASSOC);
                   <br>
                   <div class="col-lg-12">
                     <?php
-
+                    error_reporting(0);
                     extract($_GET);
                     if ($update=="bos") { ?>
                       <div class="alert alert-warning">

@@ -248,10 +248,13 @@
                             <a href="sosyal-medya.php"><i class="fa fa-slack fa-fw"></i> Sosyal Medya</a>
                         </li>
                         <li>
-                            <a href="morris.html"><i class="fa fa-bomb fa-fw"></i> Logo & Favicon</a>
+                            <a href="logo-favicon.php"><i class="fa fa-bomb fa-fw"></i> Logo & Favicon</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
+                </li>
+                <li>
+                    <a href="yazilar.php"><i class="fa fa-list fa-fw"></i> Yazılar</a>
                 </li>
                 <li>
                     <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
