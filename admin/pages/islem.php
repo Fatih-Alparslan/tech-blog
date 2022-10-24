@@ -125,5 +125,121 @@ if (isset($favicon)) {
   }
 }
 
+// YAZI EKLE seo eklenebilir
+$DosyaTuru= array("image/jpeg","image/jpg","image/png","image/x-png",);
+$DosyaUzanti=array("jpeg","jpg","png","x-png");
+
+if (isset($yazi_ekle)) {
+
+      $kaynak=$_FILES["yazi_foto"]["tmp_name"];
+      $isim=$_FILES["yazi_foto"]["name"];
+      $boyut=$_FILES["yazi_foto"]["size"];
+      $tur=$_FILES["yazi_foto"]["type"];
+
+      $uzanti=substr($isim,strpos($isim,".")+1);
+      $resimAd=rand()."_".$isim;
+      $hedef="../../images/haberler/".$resimAd;
+      if ($kaynak) {
+        if (!in_array($uzanti,$DosyaUzanti) && !in_array($tur,$DosyaTuru)) {
+          header("Location: yazilar.php?update=gecersizuzanti");
+        }
+        elseif ($boyut>1024*1024) {
+          header("Location: yazilar.php?update=buyuk");
+        }
+        else {
+          if (move_uploaded_file($kaynak,$hedef)) {
+            $yukle=$db->prepare("INSERT INTO yazilar  SET yazi_foto=?, yazi_title=?, yazi_kategori_id=?, yazi_icerik=?,yazi_yazar_id=?");
+            $insert=$yukle->execute(array($resimAd,$yazi_title,$yazi_kategori,$yazi_icerik,$yazar));
+            if ($insert) {
+              header("Location: yazilar.php?insert=yes");
+            }else {
+              header("Location: yazilar.php?insert=no");
+            }
+          }
+        }
+      }
+}
+
+// YAZI DÜZENLE
+$DosyaTuru= array("image/jpeg","image/jpg","image/png","image/x-png",);
+$DosyaUzanti=array("jpeg","jpg","png","x-png");
+$yazi_id=$_GET["yazi_id"];
+if (isset($yazi_duzenle)) {
+  //eğer Fotoğraf değiştirirse burası çalışacak
+  if ($_FILES["yazi_foto"]["size"]>0) {
+
+      $kaynak=$_FILES["yazi_foto"]["tmp_name"];
+      $isim=$_FILES["yazi_foto"]["name"];
+      $boyut=$_FILES["yazi_foto"]["size"];
+      $tur=$_FILES["yazi_foto"]["type"];
+
+      $uzanti=substr($isim,strpos($isim,".")+1);
+      $resimAd=rand()."_".$isim;
+      $hedef="../../images/haberler/".$resimAd;
+      if ($kaynak) {
+        if (!in_array($uzanti,$DosyaUzanti) && !in_array($tur,$DosyaTuru)) {
+          header("Location: yazilar.php?update=gecersizuzanti");
+        }
+        elseif ($boyut>1024*1024) {
+          header("Location: yazilar.php?update=buyuk");
+        }
+        else {
+          $sil =$db->prepare("SELECT * FROM yazilar WHERE yazi_id=?");
+          $sil->execute(array($yazi_id));
+          $eski_resim=$sil->fetch(PDO::FETCH_ASSOC);
+          $eski_resim["yazi_foto"];
+          unlink("../../images/haberler/".$eski_resim["yazi_foto"]);
+
+          if (move_uploaded_file($kaynak,$hedef)) {
+            $yukle=$db->prepare("UPDATE yazilar SET yazi_foto=?, yazi_title=?, yazi_kategori_id=?, yazi_icerik=? WHERE yazi_id=?");
+            $update=$yukle->execute(array($resimAd,$yazi_title,$yazi_kategori,$yazi_icerik,$yazi_id));
+            if ($update) {
+              header("Location: yazilar.php?update=yes");
+            }else {
+              header("Location: yazilar.php?update=no");
+            }
+          }
+        }
+      }
+  }else {
+    if (!$yazi_title || !$yazi_icerik || !$yazi_kategori) {
+       header("Location: yazilar.php?update=bos");
+    }
+    else {
+
+
+      $yukle=$db->prepare("UPDATE yazilar SET yazi_title=?, yazi_kategori_id=?, yazi_icerik=? WHERE yazi_id=?");
+      $update=$yukle->execute(array($yazi_title,$yazi_kategori,$yazi_icerik,$yazi_id));
+      if ($update) {
+        header("Location: yazilar.php?update=yes");
+      }else {
+        header("Location: yazilar.php?update=no");
+      }
+    }
+  }
+}
+
+// YAZI SİLME İŞLEMİ
+$yazisil_id= $_GET["yazisil_id"];
+if (isset($yazisil_id)) {
+
+  $sil =$db->prepare("SELECT * FROM yazilar WHERE yazi_id=?");
+  $sil->execute(array($yazisil_id));
+  $eski_resim=$sil->fetch(PDO::FETCH_ASSOC);
+  $eski_resim["yazi_foto"];
+  unlink("../../images/haberler/".$eski_resim["yazi_foto"]);
+
+  $delete=$db->prepare("DELETE FROM yazilar WHERE yazi_id=?");
+  $remove=$delete->execute(array($yazisil_id));
+  if ($remove) {
+    header("Location: yazilar.php?delete=yes");
+  }else {
+    header("Location: yazilar.php?delete=no");
+  }
+}
+
+
+
+
 
  ?>

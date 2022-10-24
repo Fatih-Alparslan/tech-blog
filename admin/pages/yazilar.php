@@ -29,12 +29,35 @@ $ayar_cek=$ayarlar->fetch(PDO::FETCH_ASSOC);
                     <div class="alert alert-success">
                           <b>TEBRİKLER!</b> Güncelleme işlemi başarıyla yapıldı...
                     </div>
-                  <?php } ?>
+                  <?php }
+                  elseif ($delete=="yes") {?>
+                    <div class="alert alert-success">
+                          <b>TEBRİKLER!</b> Silme işlemi başarıyla gerçekleşti...
+                    </div>
+                  <?php }
+                  elseif ($delete=="no") {?>
+                    <div class="alert alert-success">
+                          <b>HATA!</b> Silme işlemi yapılırken bir hata oluştu...
+                    </div>
+                  <?php }
+                  elseif ($insert=="yes") {?>
+                    <div class="alert alert-success">
+                          <b>TEBRİKLER!</b> ekleme işlemi başarıyla gerçekleşti...
+                    </div>
+                  <?php }
+                  elseif ($insert=="no") {?>
+                    <div class="alert alert-success">
+                          <b>HATA!</b> Ekleme işlemi yapılırken bir hata oluştu...
+                    </div>
+                  <?php }
+
+                  ?>
 
                   <div class="panel panel-default">
                       <div class="panel-heading">
 
                           <i class="fa fa-list"> Yazılar</i>
+                          <a  href="yazi-ekle.php" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"> Yazı Ekle</i></a>
                       </div>
                       <!-- /.panel-heading -->
                       <div class="panel-body">

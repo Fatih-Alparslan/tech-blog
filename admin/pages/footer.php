@@ -27,7 +27,7 @@ $(document).ready(function() {
     });
 });
 </script>
-
+<script src="../ckeditor/ckeditor.js"></script>
 </body>
 
 </html>
