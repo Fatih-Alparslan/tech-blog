@@ -14,22 +14,7 @@ $ayar_cek=$ayarlar->fetch(PDO::FETCH_ASSOC);
               <div class="row">
                   <br>
                   <div class="col-lg-12">
-                    <?php
-                    error_reporting(0);
-                    extract($_GET);
-                    if ($update=="bos") { ?>
-                      <div class="alert alert-warning">
-                          <b>DİKKAT!</b> Lütfen boş alan bırakmayınız...
-                      </div>
-                    <?php }elseif ($update=="no") {?>
-                      <div class="alert alert-danger">
-                        <b>HATA!</b> Güncelleme işlemi yapılırken bir hata oluştu...
-                      </div>
-                  <?php  }elseif ($update=="yes") {?>
-                    <div class="alert alert-success">
-                          <b>TEBRİKLER!</b> Güncelleme işlemi başarıyla yapıldı...
-                    </div>
-                  <?php } ?>
+                    <?php include "durum.php" ?>       
 
                     <div class="panel panel-default">
 

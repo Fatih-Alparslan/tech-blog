@@ -130,7 +130,6 @@ $DosyaTuru= array("image/jpeg","image/jpg","image/png","image/x-png",);
 $DosyaUzanti=array("jpeg","jpg","png","x-png");
 
 if (isset($yazi_ekle)) {
-
       $kaynak=$_FILES["yazi_foto"]["tmp_name"];
       $isim=$_FILES["yazi_foto"]["name"];
       $boyut=$_FILES["yazi_foto"]["size"];
@@ -139,32 +138,41 @@ if (isset($yazi_ekle)) {
       $uzanti=substr($isim,strpos($isim,".")+1);
       $resimAd=rand()."_".$isim;
       $hedef="../../images/haberler/".$resimAd;
-      if ($kaynak) {
-        if (!in_array($uzanti,$DosyaUzanti) && !in_array($tur,$DosyaTuru)) {
-          header("Location: yazilar.php?update=gecersizuzanti");
-        }
-        elseif ($boyut>1024*1024) {
-          header("Location: yazilar.php?update=buyuk");
-        }
-        else {
-          if (move_uploaded_file($kaynak,$hedef)) {
-            $yukle=$db->prepare("INSERT INTO yazilar  SET yazi_foto=?, yazi_title=?, yazi_kategori_id=?, yazi_icerik=?,yazi_yazar_id=?");
-            $insert=$yukle->execute(array($resimAd,$yazi_title,$yazi_kategori,$yazi_icerik,$yazar));
-            if ($insert) {
-              header("Location: yazilar.php?insert=yes");
-            }else {
-              header("Location: yazilar.php?insert=no");
+      if (!$kaynak || !$yazi_title || !$yazi_icerik) {
+       header("Location: yazilar.php?update=bos");
+      }
+      else {
+
+
+        if ($kaynak) {
+          if (!in_array($uzanti,$DosyaUzanti) && !in_array($tur,$DosyaTuru)) {
+            header("Location: yazilar.php?update=gecersizuzanti");
+          }
+          elseif ($boyut>1024*1024) {
+            header("Location: yazilar.php?update=buyuk");
+          }
+          else {
+            if (move_uploaded_file($kaynak,$hedef)) {
+              $yukle=$db->prepare("INSERT INTO yazilar  SET yazi_foto=?, yazi_title=?, yazi_kategori_id=?, yazi_icerik=?,yazi_yazar_id=?");
+              $insert=$yukle->execute(array($resimAd,$yazi_title,$yazi_kategori,$yazi_icerik,$yazar));
+              if ($insert) {
+                header("Location: yazilar.php?insert=yes");
+              }else {
+                header("Location: yazilar.php?insert=no");
+              }
             }
           }
         }
       }
+
+
 }
 
 // YAZI DÜZENLE
 $DosyaTuru= array("image/jpeg","image/jpg","image/png","image/x-png",);
 $DosyaUzanti=array("jpeg","jpg","png","x-png");
 $yazi_id=$_GET["yazi_id"];
-if (isset($yazi_duzenle)) {
+if (isset($yazi_id)) {
   //eğer Fotoğraf değiştirirse burası çalışacak
   if ($_FILES["yazi_foto"]["size"]>0) {
 
@@ -235,6 +243,54 @@ if (isset($yazisil_id)) {
     header("Location: yazilar.php?delete=yes");
   }else {
     header("Location: yazilar.php?delete=no");
+  }
+}
+
+// KATEGORİ EKLEME İŞLEMİ
+if (isset($kategori_ekle)) {
+
+  if (!$kategori_title || !$kategori_url) {
+      header("Location: kategoriler.php?update=bos");
+  }else {
+      $kategoriler=$db->prepare("INSERT INTO kategoriler SET kategori_title=?, kategori_url=?");
+      $kategori_ekle=$kategoriler->execute(array($kategori_title,$kategori_url));
+      if ($kategori_ekle) {
+        header("Location: kategoriler.php?insert=yes");
+      }
+      else {
+      header("Location: kategoriler.php?insert=no");
+      }
+  }
+}
+
+// KATEGORİ GÜNCELLEME İŞLEMİ
+$kategori_id=$_GET["kategori_id"];
+if (isset($kategori_duzenle)) {
+
+  if (!$kategori_title || !$kategori_url) {
+      header("Location: kategoriler.php?update=bos");
+  }else {
+      $kategoriler=$db->prepare("UPDATE kategoriler SET kategori_title=?, kategori_url=? WHERE kategori_id=?");
+      $kategori_update=$kategoriler->execute(array($kategori_title,$kategori_url,$kategori_id));
+      if ($kategori_update) {
+        header("Location: kategoriler.php?update=yes");
+      }
+      else {
+        header("Location: kategoriler.php?update=no");
+      }
+  }
+}
+
+// YAZI SİLME İŞLEMİ
+$kategorisil_id= $_GET["kategorisil_id"];
+if (isset($kategorisil_id)) {
+
+  $delete=$db->prepare("DELETE FROM kategoriler WHERE kategori_id=?");
+  $remove=$delete->execute(array($kategorisil_id));
+  if ($remove) {
+    header("Location: kategoriler.php?delete=yes");
+  }else {
+    header("Location: kategoriler.php?delete=no");
   }
 }
 

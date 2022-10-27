@@ -256,8 +256,9 @@
                 <li>
                     <a href="yazilar.php"><i class="fa fa-list fa-fw"></i> Yazılar</a>
                 </li>
+
                 <li>
-                    <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
+                    <a href="kategoriler.php"><i class="fa fa-tags fa-fw"></i> Kategoriler</a>
                 </li>
                 <li>
                     <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>

@@ -8,6 +8,7 @@
               <div class="row">
                   <br>
                   <div class="col-lg-12">
+                  
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-edit fa-fw"></i> Yazı Ekle
