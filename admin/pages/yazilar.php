@@ -2,12 +2,6 @@
       <!-- Navigation -->
 <?php include "sidebar.php" ?>
 
-<?php
-$ayarlar=$db->prepare("SELECT * FROM ayarlar");
-$ayarlar->execute();
-$ayar_cek=$ayarlar->fetch(PDO::FETCH_ASSOC);
- ?>
-
       <!-- Page Content -->
       <div id="page-wrapper">
           <div class="container-fluid">

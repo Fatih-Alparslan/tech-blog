@@ -260,6 +260,10 @@
                 <li>
                     <a href="kategoriler.php"><i class="fa fa-tags fa-fw"></i> Kategoriler</a>
                 </li>
+
+                <li>
+                    <a href="reklamlar.php"><i class="fa fa-suitcase fa-fw"></i> Reklamlar</a>
+                </li>
                 <li>
                     <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
                 </li>

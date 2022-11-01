@@ -294,6 +294,58 @@ if (isset($kategorisil_id)) {
   }
 }
 
+//REKLAM DÜZENLE
+$DosyaTuru= array("image/jpeg","image/jpg","image/png","image/x-png",);
+$DosyaUzanti=array("jpeg","jpg","png","x-png");
+$reklam_id=$_GET["reklam_id"];
+if (isset($reklam_id)) {
+  //eğer Fotoğraf değiştirirse burası çalışacak
+  if ($_FILES["reklam_banner"]["size"]>0) {
+
+      $kaynak=$_FILES["reklam_banner"]["tmp_name"];
+      $isim=$_FILES["reklam_banner"]["name"];
+      $boyut=$_FILES["reklam_banner"]["size"];
+      $tur=$_FILES["reklam_banner"]["type"];
+
+      $uzanti=substr($isim,strpos($isim,".")+1);
+      $resimAd=rand()."_".$isim;
+      $hedef="../../images/reklamlar/".$resimAd;
+      if ($kaynak) {
+        if (!in_array($uzanti,$DosyaUzanti) && !in_array($tur,$DosyaTuru)) {
+          header("Location: reklamlar.php?update=gecersizuzanti");
+        }
+        elseif ($boyut>1024*1024) {
+          header("Location: reklamlar.php?update=buyuk");
+        }
+        else {
+          $sil =$db->prepare("SELECT * FROM reklamlar WHERE reklam_id=?");
+          $sil->execute(array($reklam_id));
+          $eski_resim=$sil->fetch(PDO::FETCH_ASSOC);
+          $eski_resim["reklam_banner"];
+          unlink("../../images/reklamlar/".$eski_resim["reklam_banner"]);
+
+          if (move_uploaded_file($kaynak,$hedef)) {
+            $yukle=$db->prepare("UPDATE reklamlar SET reklam_banner=?, reklam_link=? WHERE reklam_id=?");
+            $update=$yukle->execute(array($resimAd,$reklam_link,$reklam_id));
+            if ($update) {
+              header("Location: reklamlar.php?update=yes");
+            }else {
+              header("Location: reklamlar.php?update=no");
+            }
+          }
+        }
+      }
+  }else {
+      $yukle=$db->prepare("UPDATE reklamlar SET reklam_link=? WHERE reklam_id=?");
+      $update=$yukle->execute(array($reklam_link,$reklam_id));
+      if ($update) {
+        header("Location: reklamlar.php?update=yes");
+      }else {
+        header("Location: reklamlar.php?update=no");
+      }
+  }
+}
+
 
 
 
